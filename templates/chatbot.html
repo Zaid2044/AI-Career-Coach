@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Chatbot - AI Career Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Interview Practice Chatbot</h1>
+        <p>Practice your answers to common interview questions.</p>
+        <div class="chat-window">
+            <div id="chat-box">
+                {% for entry in chat_history %}
+                    <div class="message-container {{ 'user-message' if entry.speaker == 'user' else 'bot-message' }}">
+                        <div class="message">
+                            {{ entry.message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <form id="chat-form" action="/chatbot" method="post">
+                <input type="text" id="answer" name="answer" placeholder="Type your answer here..." autocomplete="off" required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="navigation-links">
+            <a href="/">Resume Analyzer</a>
+            <a href="/chatbot/reset">Reset Chat</a>
+        </div>
+    </div>
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+</body>
+</html>
