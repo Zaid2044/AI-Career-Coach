@@ -1,0 +1,19 @@
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data files (we don't want to upload personal resumes)
+data/
+*.txt
+*.pdf
+*.docx
+
+# Saved models
+models/
+
+# IDE specific files
+.idea/
+.vscode/
