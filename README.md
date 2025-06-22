@@ -85,12 +85,12 @@ To run the main web application, execute the `app.py` script from the project ro
 ```bash
 python app.py
 ```
-    -   The server will start, typically on http://127.0.0.1:5000.
-    -   Open this URL in your web browser to begin.
+-  The server will start, typically on http://127.0.0.1:5000.
+-  Open this URL in your web browser to begin.
 
 ## Workflow:
 
-1. Homepage: Paste a resume and a job description into the text areas and click "Analyze and Start Coaching".
-2. Dashboard: View your initial resume-fit score and feedback. Click "Start Interview Practice".
-3. Chatbot: Answer the series of dynamically generated questions. After each answer, you will receive real-time feedback from the Gemini AI.
-4. Final Report: Once all questions are answered, a final summary of your overall performance will be displayed.
+1.  **Homepage**     : Paste a resume and a job description into the text areas and click "Analyze and Start Coaching".
+2.  **Dashboard**    : View your initial resume-fit score and feedback. Click "Start Interview Practice".
+3.  **Chatbot**      : Answer the series of dynamically generated questions. After each answer, you will receive real-time feedback from the Gemini AI.
+4.  **Final Report** : Once all questions are answered, a final summary of your overall performance will be displayed.
