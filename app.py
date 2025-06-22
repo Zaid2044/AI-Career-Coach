@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from src.analyzer import calculate_similarity
-from src.interview_analyzer import extract_keywords, analyze_interview
+from src.gemini_feedback import get_ai_feedback
 import os
+import numpy as np
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -47,11 +48,11 @@ def coach_dashboard():
     )
 
 def generate_questions(job_description):
-    jd_keywords = extract_keywords(job_description, top_n=3)
+    from src.interview_analyzer import extract_keywords
+    jd_keywords = extract_keywords(job_description, top_n=2)
     technical_questions = [
         "Can you describe your experience with {kw}?",
-        "Tell me about a project where you used {kw}.",
-        "How would you approach a task involving {kw}?"
+        "Tell me about a project where you used {kw}."
     ]
     
     questions = BEHAVIORAL_QUESTIONS[:2]
@@ -60,7 +61,7 @@ def generate_questions(job_description):
         if i < len(technical_questions):
             questions.append(technical_questions[i].format(kw=keyword))
             
-    questions.append(BEHAVIORAL_QUESTIONS[2])
+    questions.append(BEHAVIORAL_QUESTIONS[-1])
     return questions
 
 @app.route('/chatbot', methods=['GET', 'POST'])
@@ -73,12 +74,19 @@ def chatbot():
         session['question_index'] = 0
         session['chat_history'] = [{'speaker': 'bot', 'message': session['questions'][0]}]
         session['interview_finished'] = False
-        session['feedback_report'] = None
+        session['final_summary'] = None
 
     if request.method == 'POST' and not session.get('interview_finished'):
         user_answer = request.form.get('answer')
+        current_question_index = session.get('question_index', 0)
+        current_question = session['questions'][current_question_index]
+
         if user_answer:
             session['chat_history'].append({'speaker': 'user', 'message': user_answer})
+            
+            ai_feedback = get_ai_feedback(session['jd_text'], current_question, user_answer)
+            session['chat_history'].append({'speaker': 'bot', 'message': ai_feedback, 'is_feedback': True})
+
             session['question_index'] += 1
             
             if session['question_index'] < len(session['questions']):
@@ -86,19 +94,34 @@ def chatbot():
                 session['chat_history'].append({'speaker': 'bot', 'message': next_question})
             else:
                 session['interview_finished'] = True
-                jd_keywords = extract_keywords(session['jd_text'])
-                feedback_report = analyze_interview(session['chat_history'], jd_keywords)
-                session['feedback_report'] = feedback_report
                 
-                final_message = "That's all the questions for now. Here is your feedback report:"
+                all_feedback = [entry['message'] for entry in session['chat_history'] if entry.get('is_feedback')]
+                all_scores = [fb.get('suitability_score', 0) for fb in all_feedback]
+                
+                overall_score = np.mean(all_scores) if all_scores else 0
+                
+                summary_text = ""
+                if overall_score >= 0.75:
+                    summary_text = "Excellent performance! You are a very strong candidate for this role."
+                elif overall_score >= 0.5:
+                    summary_text = "Good performance. You are a good fit, with some areas to polish."
+                else:
+                    summary_text = "There is room for improvement. Focus on the feedback provided to better align with the role."
+                    
+                session['final_summary'] = {
+                    "overall_score": overall_score,
+                    "summary_text": summary_text
+                }
+
+                final_message = "That concludes our practice interview. See your final summary below."
                 session['chat_history'].append({'speaker': 'bot', 'message': final_message})
 
     session.modified = True
     return render_template(
         'chatbot.html', 
         chat_history=session.get('chat_history', []),
-        feedback_report=session.get('feedback_report'),
-        interview_finished=session.get('interview_finished')
+        interview_finished=session.get('interview_finished'),
+        final_summary=session.get('final_summary')
     )
 
 @app.route('/reset')

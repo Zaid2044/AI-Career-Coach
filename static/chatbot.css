@@ -162,3 +162,54 @@
     color: #212529;
     margin-bottom: 5px;
 }
+
+.final-summary-container {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 20px;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.final-summary-container h3 {
+    margin: 0 0 25px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.final-score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 8px solid #0d6efd;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 25px auto;
+}
+
+.final-score-circle strong {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #0d6efd;
+    line-height: 1;
+}
+
+.final-score-circle span {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.summary-text {
+    font-size: 1.1rem;
+    color: #495057;
+    max-width: 600px;
+    margin: 0 auto;
+}

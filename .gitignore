@@ -17,3 +17,5 @@ models/
 # IDE specific files
 .idea/
 .vscode/
+
+.env

@@ -14,44 +14,51 @@
         <div class="chat-window">
             <div id="chat-box">
                 {% for entry in chat_history %}
-                    <div class="message-container {{ 'user-message' if entry.speaker == 'user' else 'bot-message' }}">
-                        <div class="message">
-                            {{ entry.message | safe }}
+                    {% if entry.get('is_feedback') %}
+                        <div class="feedback-report-container">
+                            <div class="feedback-report">
+                                <h3>AI Feedback on Your Answer</h3>
+                                <div class="feedback-section">
+                                    <h4>Strengths</h4>
+                                    <ul>
+                                        {% for item in entry.message.strengths %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="feedback-section">
+                                    <h4>Areas for Improvement</h4>
+                                    <ul>
+                                        {% for item in entry.message.weaknesses %}
+                                            <li>{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="feedback-metrics">
+                                    <div class="metric-item">
+                                        <strong>{{ "%.0f"|format(entry.message.suitability_score * 100) }}%</strong>
+                                        Answer Suitability
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <div class="message-container {{ 'user-message' if entry.speaker == 'user' else 'bot-message' }}">
+                            <div class="message">
+                                {{ entry.message }}
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
 
-                {% if feedback_report %}
-                <div class="feedback-report-container">
-                    <div class="feedback-report">
-                        <h3>Interview Feedback Report</h3>
-                        <div class="feedback-section">
-                            <h4>Strengths</h4>
-                            <ul>
-                                {% for item in feedback_report.strengths %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="feedback-section">
-                            <h4>Areas for Improvement</h4>
-                            <ul>
-                                {% for item in feedback_report.weaknesses %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="feedback-metrics">
-                            <div class="metric-item">
-                                <strong>{{ feedback_report.keyword_coverage }}%</strong>
-                                Keyword Coverage
-                            </div>
-                            <div class="metric-item">
-                                <strong>{{ feedback_report.overall_sentiment }}</strong>
-                                Overall Sentiment
-                            </div>
-                        </div>
+                {% if final_summary %}
+                <div class="final-summary-container">
+                    <h3>Overall Interview Performance</h3>
+                    <div class="final-score-circle">
+                        <strong>{{ "%.0f"|format(final_summary.overall_score * 100) }}%</strong>
+                        <span>Overall Fit</span>
                     </div>
+                    <p class="summary-text">{{ final_summary.summary_text }}</p>
                 </div>
                 {% endif %}
             </div>
