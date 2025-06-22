@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard - AI Career Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Your AI Coaching Dashboard</h1>
+        
+        <div class="card">
+            <h2>Resume Analysis</h2>
+            <div class="result-box">
+                <p class="score">Resume-Job Fit Score: <span>{{ resume_score }}</span></p>
+                <p class="feedback">{{ resume_feedback }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Next Step: Interview Practice</h2>
+            <p>Let's practice for the interview. Our AI will ask behavioral and technical questions based on the job description you provided.</p>
+            <div class="button-group">
+                <a href="/chatbot" class="btn btn-primary">Start Interview Practice</a>
+            </div>
+        </div>
+        
+        <div class="button-group">
+             <a href="/reset" class="btn btn-secondary">Start New Session</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -9,26 +9,63 @@
 </head>
 <body>
     <div class="container">
-        <h1>Interview Practice Chatbot</h1>
-        <p>Practice your answers to common interview questions.</p>
+        <h1>Intelligent Interview Practice</h1>
+        
         <div class="chat-window">
             <div id="chat-box">
                 {% for entry in chat_history %}
                     <div class="message-container {{ 'user-message' if entry.speaker == 'user' else 'bot-message' }}">
                         <div class="message">
-                            {{ entry.message }}
+                            {{ entry.message | safe }}
                         </div>
                     </div>
                 {% endfor %}
+
+                {% if feedback_report %}
+                <div class="feedback-report-container">
+                    <div class="feedback-report">
+                        <h3>Interview Feedback Report</h3>
+                        <div class="feedback-section">
+                            <h4>Strengths</h4>
+                            <ul>
+                                {% for item in feedback_report.strengths %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="feedback-section">
+                            <h4>Areas for Improvement</h4>
+                            <ul>
+                                {% for item in feedback_report.weaknesses %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="feedback-metrics">
+                            <div class="metric-item">
+                                <strong>{{ feedback_report.keyword_coverage }}%</strong>
+                                Keyword Coverage
+                            </div>
+                            <div class="metric-item">
+                                <strong>{{ feedback_report.overall_sentiment }}</strong>
+                                Overall Sentiment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
+            
+            {% if not interview_finished %}
             <form id="chat-form" action="/chatbot" method="post">
-                <input type="text" id="answer" name="answer" placeholder="Type your answer here..." autocomplete="off" required>
-                <button type="submit">Send</button>
+                <input type="text" id="answer" name="answer" placeholder="Type your answer..." autocomplete="off" required autofocus>
+                <button type="submit" class="btn btn-primary">Send</button>
             </form>
-        </div>
-        <div class="navigation-links">
-            <a href="/">Resume Analyzer</a>
-            <a href="/chatbot/reset">Reset Chat</a>
+            {% else %}
+            <div class="button-group" style="padding: 15px;">
+                 <a href="/reset" class="btn btn-secondary">Start New Session</a>
+            </div>
+            {% endif %}
         </div>
     </div>
     <script>
