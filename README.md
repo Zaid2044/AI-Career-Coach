@@ -1,96 +1,107 @@
-# 🤖 AI Career Coach
+# 🧑‍💼 AI Career Coach
 
-A sophisticated, multi-stage web application designed to be a personal career assistant. This tool leverages Natural Language Processing (NLP) and Generative AI to provide users with a comprehensive suite of tools for their job search, from initial resume screening to in-depth, AI-driven interview practice.
-
-This project demonstrates an end-to-end development lifecycle, including core NLP logic, advanced AI integration via APIs, a stateful web application backend, and a polished, modern user interface.
+An intelligent career assistant that helps you find job-fit, improve resumes, and simulate interviews using AI. This Flask-based app integrates NLP, LLMs, and web tech to deliver personalized, interactive career coaching right from your browser.
 
 ---
 
-## ✨ Key Features
+## 🧠 About the Project
 
--   **Resume-to-Job-Description Analysis:**
-    -   Calculates a "fit score" using **TF-IDF Vectorization** and **Cosine Similarity** to quantify how well a resume aligns with a specific job description.
-    -   Provides instant feedback on the strength of the alignment.
+**AI Career Coach** is designed to:
 
--   **Intelligent Interview Chatbot:**
-    -   **Dynamic Question Generation:** Creates a unique set of interview questions by combining standard behavioral questions with technical questions derived directly from keywords extracted from the job description.
-    -   **Generative AI Feedback:** Utilizes the **Google Gemini API** to provide real-time, human-like feedback on each of the user's answers. The AI analyzes strengths, weaknesses, and relevance to the role.
-    -   **Final Performance Summary:** After the interview, it calculates an overall "Fit Score" and provides a summary of the user's performance, highlighting whether they are a strong fit or need improvement.
+* Analyze resumes and extract key skills
+* Recommend job roles based on your profile
+* Simulate job interviews with intelligent Q\&A
+* Provide interview feedback (WIP)
 
--   **Modern Web Interface:**
-    -   A clean, multi-page web application built with **Flask**.
-    -   Uses server-side sessions to maintain user context across the resume analysis and chatbot stages.
-    -   A responsive and aesthetically pleasing UI built with modern HTML and CSS.
+Built for students, job seekers, and professionals looking to enhance their job-readiness through AI-driven insights.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Features
 
--   **Backend:** Python, Flask
--   **Core NLP:** spaCy, Scikit-learn
--   **Generative AI:** Google Gemini Pro (via `google-generativeai` SDK)
--   **Frontend:** HTML5, CSS3
--   **Supporting Libraries:** python-dotenv, TextBlob
+* 📄 **Resume Analyzer** – Extracts and ranks skills, keywords, and roles
+* 🎯 **Job Fit Recommender** – Matches user profile to suitable job titles
+* 🎤 **Mock Interview Simulator** – Interactive Q\&A powered by LLMs
+* 📊 **Skill Gap Feedback** – (Planned) show skills you need for your dream role
+* 🖥️ **Flask Web UI** – Simple, interactive frontend
+
+---
+
+## 🛠 Tech Stack
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat\&logo=python\&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=flat\&logo=flask\&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat\&logo=openai\&logoColor=white)
+![NLP](https://img.shields.io/badge/NLP-Text%20Analysis-orange?style=flat)
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these instructions to get the project running on your local machine.
+### 1. Clone the Repo
 
-### Prerequisites
+```bash
+git clone https://github.com/Zaid2044/AI-Career-Coach.git
+cd AI-Career-Coach
+```
 
--   Python 3.9+
--   Git
--   A **Google AI API Key**.
+### 2. Create Virtual Environment
 
-### Installation
+```bash
+python -m venv venv
+./venv/Scripts/Activate.ps1
+```
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Zaid2044/AI-Career-Coach.git
-    cd AI-Career-Coach
-    ```
+### 3. Install Dependencies
 
-2.  **Create and activate a Python virtual environment:**
-    ```bash
-    python -m venv venv
-    .\venv\Scripts\Activate.ps1
-    ```
+```bash
+pip install -r requirements.txt
+```
 
-3.  **Install the required dependencies:**
-    ```bash
-    pip install flask spacy scikit-learn textblob google-generativeai python-dotenv
-    ```
+### 4. Add API Key
 
-4.  **Download the spaCy language model:**
-    ```bash
-    python -m spacy download en_core_web_sm
-    ```
+* You’ll need your OpenAI API key
+* Store it in a `.env` file or directly in the `config.py`
 
-5.  **Set up your API Key:**
-    -   Create a file named `.env` in the root of the project directory.
-    -   Add your Google AI API key to the file like this:
-        ```
-        GOOGLE_API_KEY=YOUR_API_KEY_HERE
-        ```
-    -   **Important:** The `.gitignore` file is configured to prevent the `.env` file from being uploaded.
-
----
-
-## ⚡ Usage
-
-To run the main web application, execute the `app.py` script from the project root:
+### 5. Run the App
 
 ```bash
 python app.py
 ```
--  The server will start, typically on http://127.0.0.1:5000.
--  Open this URL in your web browser to begin.
 
-## Workflow:
+Visit: [http://localhost:5000](http://localhost:5000)
 
-1.  **Homepage**     : Paste a resume and a job description into the text areas and click "Analyze and Start Coaching".
-2.  **Dashboard**    : View your initial resume-fit score and feedback. Click "Start Interview Practice".
-3.  **Chatbot**      : Answer the series of dynamically generated questions. After each answer, you will receive real-time feedback from the Gemini AI.
-4.  **Final Report** : Once all questions are answered, a final summary of your overall performance will be displayed.
+---
+
+## 🧪 Demo
+
+Coming soon — add screenshots or GIFs of resume analysis and Q\&A simulation.
+
+---
+
+## 📁 Project Structure
+
+```
+AI-Career-Coach/
+├── static/
+├── templates/
+├── resume_parser.py
+├── recommender.py
+├── interviewer.py
+├── app.py
+├── config.py
+└── requirements.txt
+```
+
+---
+
+## 👤 Author
+
+**MOHAMMED ZAID AHMED**
+[![GitHub](https://img.shields.io/badge/GitHub-Zaid2044-181717?style=flat\&logo=github)](https://github.com/Zaid2044)
+
+---
+
+## 🪪 License
+
+MIT License
